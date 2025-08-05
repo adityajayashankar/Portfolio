@@ -13,8 +13,37 @@
             font-family: 'Inter', sans-serif;
             background-color: #0D1117; /* GitHub dark */
             color: #C9D1D9; /* GitHub dark text */
+            cursor: none; /* Hide the default cursor */
         }
         
+        /* --- Interactive Cursor Light --- */
+        #cursor-light {
+            position: fixed;
+            /* --- FIX: Reduced the size of the glow area --- */
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, rgba(249, 115, 22, 0) 60%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9998; /* Below the custom cursor dot */
+            transition: background 0.2s;
+        }
+        
+        /* --- Custom Cursor Dot --- */
+        #custom-cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: #F97316;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999; /* On top of everything */
+            transition: transform 0.1s ease-out;
+        }
+        /* --- End Cursor Styles --- */
+
         /* --- Slideshow Styles --- */
         #hero-slideshow {
             position: absolute;
@@ -35,13 +64,12 @@
             background-position: center;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
-            transform: scale(1.1); /* Initial scale for Ken Burns effect */
+            transform: scale(1.1);
         }
         .slide.active {
             opacity: 1;
             animation: kenburns 20s infinite;
         }
-        /* Add a dark overlay to each slide for text readability */
         .slide::before {
             content: '';
             position: absolute;
@@ -51,7 +79,6 @@
             height: 100%;
             background: linear-gradient(rgba(13, 17, 23, 0.6), rgba(13, 17, 23, 0.85));
         }
-
         @keyframes kenburns {
             0%, 100% { transform: scale(1.1) rotate(1deg); }
             50% { transform: scale(1) rotate(-1deg); }
@@ -74,16 +101,19 @@
             background: linear-gradient(90deg, #F97316, #FB923C);
             border-radius: 2px;
         }
+        
+        /* --- Card Styles (3D Tilt Removed) --- */
         .card {
             background-color: #161B22;
             border: 1px solid #30363D;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
+            transform: translateY(-8px); /* Simple lift effect */
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
             border-color: #4A5568;
         }
+
         .icon-link svg {
             transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
         }
@@ -105,7 +135,7 @@
         .typing-cursor {
             display: inline-block;
             width: 3px;
-            height: 1.75rem; /* Match text size */
+            height: 1.75rem;
             background-color: #F97316;
             animation: blink 1s infinite;
             margin-left: 8px;
@@ -134,6 +164,10 @@
 </head>
 <body class="antialiased">
 
+    <!-- Cursor Elements -->
+    <div id="cursor-light"></div>
+    <div id="custom-cursor"></div>
+
     <!-- Header & Navigation -->
     <header class="bg-[#0D1117]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -160,16 +194,13 @@
 
         <!-- Hero Section -->
         <section id="hero" class="min-h-screen flex items-center relative -mx-6 px-6">
-            <!-- Slideshow Container -->
             <div id="hero-slideshow">
-                <!-- UPDATED TO USE YOUR FILE NAMES -->
                 <div class="slide active" style="background-image: url('boxing-2.jpg');"></div>
                 <div class="slide" style="background-image: url('guitar.jpg');"></div>
                 <div class="slide" style="background-image: url('ChatGPT Image Aug 3, 2025, 12_38_26 AM.jpg');"></div>
                 <div class="slide" style="background-image: url('cycle.png');"></div>
             </div>
             
-            <!-- Text Overlay -->
             <div class="text-center w-full relative z-20">
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">Aditya Jayashankar</h1>
                 <p class="text-xl md:text-2xl text-orange-400 font-medium mb-8 h-8">
@@ -188,7 +219,6 @@
              <h2 class="section-title text-3xl font-bold text-white pb-2 text-center">About Me</h2>
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/3 text-center">
-                    <!-- UPDATED PLACEHOLDER TEXT -->
                     <img src="https://placehold.co/400x400/161B22/C9D1D9?text=Coming+Soon" alt="Aditya Jayashankar" class="rounded-full mx-auto w-60 h-60 md:w-72 md:h-72 object-cover border-4 border-gray-700 shadow-lg">
                 </div>
                 <div class="md:w-2/3 text-gray-300 leading-relaxed text-center md:text-left">
@@ -287,7 +317,6 @@
 
     <footer class="border-t border-gray-800">
         <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <!-- UPDATED FOOTER -->
             <p>&copy; 2025 Aditya Jayashankar. Crafted with code & a few power chords.</p>
         </div>
     </footer>
@@ -311,7 +340,7 @@
             setInterval(() => {
                 currentSlide = (currentSlide + 1) % slides.length;
                 showSlide(currentSlide);
-            }, 5000); // Change slide every 5 seconds
+            }, 5000);
 
             // --- Typing Animation ---
             const typingTextElement = document.getElementById('typing-text');
@@ -332,22 +361,16 @@
                 } else {
                     currentPhrase = fullPhrase.substring(0, currentPhrase.length + 1);
                 }
-
                 typingTextElement.textContent = currentPhrase;
-
                 let typeSpeed = 150;
-                if (isDeleting) {
-                    typeSpeed /= 2;
-                }
-
+                if (isDeleting) typeSpeed /= 2;
                 if (!isDeleting && currentPhrase === fullPhrase) {
-                    typeSpeed = 2000; // Pause at end of phrase
+                    typeSpeed = 2000;
                     isDeleting = true;
                 } else if (isDeleting && currentPhrase === "") {
                     isDeleting = false;
                     phraseIndex = (phraseIndex + 1) % phrases.length;
                 }
-
                 setTimeout(type, typeSpeed);
             }
             type();
@@ -356,7 +379,6 @@
             const filterContainer = document.getElementById('project-filters');
             const projectGrid = document.getElementById('project-grid');
             const projects = Array.from(projectGrid.querySelectorAll('.card'));
-            
             if (filterContainer) {
                 filterContainer.addEventListener('click', (e) => {
                     if (e.target.tagName === 'BUTTON') {
@@ -364,11 +386,7 @@
                         e.target.classList.add('active');
                         const filter = e.target.getAttribute('data-filter');
                         projects.forEach(project => {
-                            if (filter === 'all' || project.dataset.category === filter) {
-                                project.style.display = 'block';
-                            } else {
-                                project.style.display = 'none';
-                            }
+                            project.style.display = (filter === 'all' || project.dataset.category === filter) ? 'block' : 'none';
                         });
                     }
                 });
@@ -382,26 +400,28 @@
                         entry.target.classList.add('is-visible');
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
 
             // --- Mobile Menu Toggle ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
             });
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
+
+            // --- Interactive Cursor ---
+            const cursorLight = document.getElementById('cursor-light');
+            const customCursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursorLight.style.left = e.clientX + 'px';
+                cursorLight.style.top = e.clientY + 'px';
+                customCursor.style.left = e.clientX + 'px';
+                customCursor.style.top = e.clientY + 'px';
             });
+
+            // --- 3D Tilt Effect on Cards (Removed) ---
         });
     </script>
 </body>
