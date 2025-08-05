@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Jayashankar - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D1117; /* GitHub dark */
+            color: #C9D1D9; /* GitHub dark text */
+        }
+        
+        /* --- Slideshow Styles --- */
+        #hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            transform: scale(1.1); /* Initial scale for Ken Burns effect */
+        }
+        .slide.active {
+            opacity: 1;
+            /* --- FIX: Animation is now ONLY on the active slide --- */
+            animation: kenburns 20s infinite;
+        }
+        /* Add a dark overlay to each slide for text readability */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.95));
+        }
+
+        @keyframes kenburns {
+            0%, 100% { transform: scale(1.1) rotate(1deg); }
+            50% { transform: scale(1) rotate(-1deg); }
+        }
+        /* --- End Slideshow Styles --- */
+
+        .section-title {
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 3rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #F97316, #FB923C);
+            border-radius: 2px;
+        }
+        .card {
+            background-color: #161B22;
+            border: 1px solid #30363D;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1);
+            border-color: #4A5568;
+        }
+        .icon-link svg {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .icon-link:hover svg {
+            transform: scale(1.2);
+            color: #F97316;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #30363D;
+            border: 4px solid #F97316;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.75rem; /* Match text size */
+            background-color: #F97316;
+            animation: blink 1s infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn.active {
+            background-color: #F97316;
+            color: white;
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-[#0D1117]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white tracking-wider">AJ</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-300 hover:text-orange-400 transition-colors duration-300">About</a>
+                <a href="#projects" class="text-gray-300 hover:text-orange-400 transition-colors duration-300">Projects</a>
+                <a href="#education" class="text-gray-300 hover:text-orange-400 transition-colors duration-300">Journey</a>
+                <a href="#contact" class="text-gray-300 hover:text-orange-400 transition-colors duration-300">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-300 focus:outline-none">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 border-t border-gray-800">
+            <a href="#about" class="block py-2 text-gray-300 hover:text-orange-400">About</a>
+            <a href="#projects" class="block py-2 text-gray-300 hover:text-orange-400">Projects</a>
+            <a href="#education" class="block py-2 text-gray-300 hover:text-orange-400">Journey</a>
+            <a href="#contact" class="block py-2 text-gray-300 hover:text-orange-400">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex items-center relative -mx-6 px-6">
+            <!-- Slideshow Container -->
+            <div id="hero-slideshow">
+                <div class="slide active" style="background-image: url('images/boxing-2.jpg');"></div> <!-- Boxing -->
+                <div class="slide" style="background-image: url('guitar.jpg');"></div> <!-- Guitar -->
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop');"></div> <!-- Tech -->
+                <div class="slide" style="background-image: url('Silhouette of Cyclist in Urban Setting.png');"></div> <!-- Bangalore -->
+                <div class="slide" style="background-image: url('muscle_car.png');"></div>
+            </div>
+            
+            <!-- Text Overlay -->
+            <div class="text-center w-full relative z-20">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">Aditya Jayashankar</h1>
+                <p class="text-xl md:text-2xl text-orange-400 font-medium mb-8 h-8">
+                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                </p>
+                 <div class="mt-12">
+                    <a href="#projects" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 text-lg">
+                        View My Work
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 fade-in-section">
+             <h2 class="section-title text-3xl font-bold text-white pb-2 text-center">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 text-center">
+                    <img src="https://placehold.co/400x400/161B22/C9D1D9?text=Aditya+J." alt="Aditya Jayashankar" class="rounded-full mx-auto w-60 h-60 md:w-72 md:h-72 object-cover border-4 border-gray-700 shadow-lg">
+                </div>
+                <div class="md:w-2/3 text-gray-300 leading-relaxed text-center md:text-left">
+                    <p class="mb-4 text-lg">Hey, I'm Aditya, a final-year student from Bangalore who's way too into data and AI. I get a kick out of taking messy data and turning it into something smart and useful, whether it's with a classic ML model or a massive LLM.</p>
+                    <p class="text-lg">When I'm not building projects, you can usually find me with a guitar in hand, getting lost in some music, or blowing off steam at the gym with a workout or some boxing. It's all about balance—staying creative and staying active.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 fade-in-section">
+            <h2 class="section-title text-3xl font-bold text-white pb-2 text-center">Featured Projects</h2>
+            <div id="project-filters" class="flex justify-center flex-wrap gap-3 mb-12">
+                <button class="filter-btn active bg-gray-700 hover:bg-orange-500 text-gray-200 font-medium py-2 px-4 rounded-lg" data-filter="all">All</button>
+                <button class="filter-btn bg-gray-700 hover:bg-orange-500 text-gray-200 font-medium py-2 px-4 rounded-lg" data-filter="llm">LLM / AI</button>
+                <button class="filter-btn bg-gray-700 hover:bg-orange-500 text-gray-200 font-medium py-2 px-4 rounded-lg" data-filter="mlops">MLOps / CI/CD</button>
+                <button class="filter-btn bg-gray-700 hover:bg-orange-500 text-gray-200 font-medium py-2 px-4 rounded-lg" data-filter="hardware">Hardware / Analog</button>
+            </div>
+            
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card rounded-lg overflow-hidden" data-category="llm">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Medical Chatbot</h3>
+                        <p class="text-gray-400 mb-4">Leveraged RAG and Groq LLM to build a full-stack chatbot for accurate, real-time health queries. Deployed with Flask & Pinecone on Render.</p>
+                        <a href="https://github.com/adityajayashankar" target="_blank" class="text-orange-400 hover:underline font-semibold">View on GitHub &rarr;</a>
+                    </div>
+                </div>
+                <div class="card rounded-lg overflow-hidden" data-category="mlops">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">End-to-End ML Pipeline</h3>
+                        <p class="text-gray-400 mb-4">Designed a full ML pipeline for student performance prediction (85%+ accuracy). Containerized with Docker and deployed with automated CI/CD.</p>
+                        <a href="https://github.com/adityajayashankar" target="_blank" class="text-orange-400 hover:underline font-semibold">View on GitHub &rarr;</a>
+                    </div>
+                </div>
+                <div class="card rounded-lg overflow-hidden" data-category="hardware">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Layered Testbench</h3>
+                        <p class="text-gray-400 mb-4">Built a modular testbench for an FSM-based sequence detector, achieving >90% functional coverage and improving detection of edge cases.</p>
+                        <a href="https://github.com/adityajayashankar" target="_blank" class="text-orange-400 hover:underline font-semibold">View on GitHub &rarr;</a>
+                    </div>
+                </div>
+                <div class="card rounded-lg overflow-hidden" data-category="hardware">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Analog EEG Sensor Design</h3>
+                        <p class="text-gray-400 mb-4">Designing an analog EEG acquisition circuit in Cadence Virtuoso to capture brainwave signals. Currently developing a full-custom layout.</p>
+                        <a href="https://github.com/adityajayashankar" target="_blank" class="text-orange-400 hover:underline font-semibold">View on GitHub &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-24 fade-in-section">
+            <h2 class="section-title text-3xl font-bold text-white pb-2 text-center">My Journey</h2>
+            <div class="max-w-2xl mx-auto relative pl-8 border-l-2 border-gray-700">
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-bold text-white">PES University</h3>
+                    <p class="text-orange-400 font-medium mb-1">Bachelor of Technology (2022 - 2026)</p>
+                    <p class="text-gray-400">Recognized with a merit-based scholarship for consistent academic excellence. GPA: 7.6</p>
+                </div>
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-bold text-white">ASC PU College</h3>
+                    <p class="text-orange-400 font-medium mb-1">12th Standard (2020 - 2022)</p>
+                    <p class="text-gray-400">Achieved 92%.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold text-white">VLS International School</h3>
+                    <p class="text-orange-400 font-medium mb-1">High School Diploma (2008 - 2020)</p>
+                    <p class="text-gray-400">Graduated with distinction (GPA: 9.4) and served as President of the Student Council.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center fade-in-section">
+            <h2 class="section-title text-3xl font-bold text-white pb-2">Let's Connect</h2>
+            <p class="text-gray-300 mb-8 max-w-xl mx-auto text-lg">I'm currently seeking new opportunities and am always open to a chat. Feel free to reach out!</p>
+            <a href="mailto:adityajayashankar@gmail.com" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 text-lg">Email Me</a>
+            <div class="flex justify-center space-x-8 mt-12">
+                <a href="https://github.com/adityajayashankar" target="_blank" rel="noopener noreferrer" class="text-gray-400 icon-link">
+                    <svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/aditya-jayashankar-9790b7272" target="_blank" rel="noopener noreferrer" class="text-gray-400 icon-link">
+                    <svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://leetcode.com/u/adityajayashankar_16/" target="_blank" rel="noopener noreferrer" class="text-gray-400 icon-link">
+                    <svg class="w-9 h-9" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.583 11.241H11.25V8.916h2.333v2.325zm-2.333 2.334V15.9h2.333v-2.325H11.25zM21.625 0H2.375A2.375 2.375 0 000 2.375v19.25A2.375 2.375 0 002.375 24h19.25A2.375 2.375 0 0024 21.625V2.375A2.375 2.375 0 0021.625 0zM18.125 18.125h-4.667V6.583h4.667v11.542z"/></svg>
+                </a>
+                <a href="https://www.notion.so/CERTIFICATIONS-239abfe4010580a7bec2cd51d27b4c5b?source=copy_link" target="_blank" rel="noopener noreferrer" class="text-gray-400 icon-link">
+                    <svg class="w-9 h-9" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1.618H5.5a1 1 0 00-.993.883l-.007.117V17a1 1 0 001 1h9a1 1 0 001-1V5.618h-2.5a1 1 0 100-2H11V3a1 1 0 00-1-1H9zM5 4.618h3V3a1 1 0 011-1h1a1 1 0 011 1v1.618h3v10.764H5V4.618zM11 14a1 1 0 10-2 0v2a1 1 0 102 0v-2zm-5-6a1 1 0 011-1h2a1 1 0 110 2H7a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+            <p>&copy; 2025 Aditya Jayashankar. Built in Bangalore with code & a few power chords.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Slideshow Logic ---
+            const slideshow = document.getElementById('hero-slideshow');
+            const slides = slideshow.querySelectorAll('.slide');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+            }
+
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000); // Change slide every 5 seconds
+
+            // --- Typing Animation ---
+            const typingTextElement = document.getElementById('typing-text');
+            const phrases = [
+                "Data Scientist",
+                "ML Engineer",
+                "Rockstar",
+                "Future Boxing Champ?"
+            ];
+            let phraseIndex = 0;
+            let currentPhrase = "";
+            let isDeleting = false;
+
+            function type() {
+                const fullPhrase = phrases[phraseIndex];
+                if (isDeleting) {
+                    currentPhrase = fullPhrase.substring(0, currentPhrase.length - 1);
+                } else {
+                    currentPhrase = fullPhrase.substring(0, currentPhrase.length + 1);
+                }
+
+                typingTextElement.textContent = currentPhrase;
+
+                let typeSpeed = 150;
+                if (isDeleting) {
+                    typeSpeed /= 2;
+                }
+
+                if (!isDeleting && currentPhrase === fullPhrase) {
+                    typeSpeed = 2000; // Pause at end of phrase
+                    isDeleting = true;
+                } else if (isDeleting && currentPhrase === "") {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+            type();
+
+            // --- Project Filtering ---
+            const filterContainer = document.getElementById('project-filters');
+            const projectGrid = document.getElementById('project-grid');
+            const projects = Array.from(projectGrid.querySelectorAll('.card'));
+            
+            if (filterContainer) {
+                filterContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON') {
+                        filterContainer.querySelector('.active').classList.remove('active');
+                        e.target.classList.add('active');
+                        const filter = e.target.getAttribute('data-filter');
+                        projects.forEach(project => {
+                            if (filter === 'all' || project.dataset.category === filter) {
+                                project.style.display = 'block';
+                            } else {
+                                project.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            }
+
+            // --- Scroll Animations ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
