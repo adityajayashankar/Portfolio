@@ -232,8 +232,7 @@
              <h2 class="section-title text-3xl font-bold text-white pb-2 text-center">About Me</h2>
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/3 text-center">
-                    <!-- UPDATED PROFILE PICTURE -->
-                    <img src="CVM_1098 (1)_LE_upscale_old_photo_authentic.jpg" alt="Aditya Jayashankar" class="rounded-full mx-auto w-60 h-60 md:w-72 md:h-72 object-cover border-4 border-gray-700 shadow-lg">
+                    <img src="aditya_saturated.jpg" alt="Aditya Jayashankar" class="rounded-full mx-auto w-60 h-60 md:w-72 md:h-72 object-cover border-4 border-gray-700 shadow-lg">
                 </div>
                 <div class="md:w-2/3 text-gray-300 leading-relaxed text-center md:text-left">
                     <p class="mb-4 text-lg">Hey, I'm Aditya, an engineering student at PES University who's way too into data and AI. I get a kick out of taking messy data and turning it into something smart and useful, whether it's with a classic ML model or a massive LLM.</p>
@@ -310,7 +309,15 @@
         <section id="contact" class="py-24 text-center fade-in-section">
             <h2 class="section-title text-3xl font-bold text-white pb-2">Get In Touch</h2>
             
-            <div class="max-w-xl mx-auto text-left">
+            <div id="contact-intro">
+                <!-- UPDATED TEXT -->
+                <p class="text-gray-300 mb-8 max-w-xl mx-auto text-lg">Have an interesting project or idea? Let's talk.</p>
+                <button id="email-me-btn" class="inline-block bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 text-lg">
+                    Let's Talk
+                </button>
+            </div>
+
+            <div id="contact-form-container" class="hidden max-w-xl mx-auto text-left">
                 <form action="https://formspree.io/f/myzpnjzq" method="POST">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-400 mb-2">Name</label>
@@ -461,6 +468,16 @@
                 cursorLight.style.top = e.clientY + 'px';
                 customCursor.style.left = e.clientX + 'px';
                 customCursor.style.top = e.clientY + 'px';
+            });
+            
+            // --- Contact Form Toggle ---
+            const emailMeBtn = document.getElementById('email-me-btn');
+            const contactIntro = document.getElementById('contact-intro');
+            const contactFormContainer = document.getElementById('contact-form-container');
+
+            emailMeBtn.addEventListener('click', () => {
+                contactIntro.classList.add('hidden');
+                contactFormContainer.classList.remove('hidden');
             });
         });
     </script>
